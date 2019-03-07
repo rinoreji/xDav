@@ -81,7 +81,8 @@ namespace Sphorium.WebDAV.Server.Framework.BaseClasses
 				base.HttpApplication.Response.Headers["Content-Type"] = this.Resource.ContentType;
 				base.HttpApplication.Response.Headers["Content-Length"] = this.Resource.ContentLength.ToString();
 				base.HttpApplication.Response.Headers["Last-Modified"] = this.Resource.LastModified.ToString("r");
-			}
+                base.HttpApplication.Response.Headers["ETag"] = $"\"{this.Resource.ETag}\"";
+            }
 
 			return (int)ServerResponseCode.Ok;
 		}

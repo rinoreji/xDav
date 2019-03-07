@@ -13,6 +13,8 @@ namespace XDav.Helper
         FileInfo _fileInfo;
         public XDavFile(string fileName)
         {
+            if (string.IsNullOrWhiteSpace(fileName))
+                return;
             DirectoryInfo _dirInfo = new DirectoryInfo(ConfigManager.DavPath);
             _fileInfo = _dirInfo.GetFiles().First(f => f.Name == fileName);
         }

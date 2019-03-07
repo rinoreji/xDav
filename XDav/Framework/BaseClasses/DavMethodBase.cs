@@ -338,10 +338,10 @@ namespace Sphorium.WebDAV.Server.Framework.BaseClasses
 			{
 				this.__httpApplication = value;
 
-				//base.HttpApplication.Response.AddHeader("Engine", "Sphorium.WebDAV.Server.Framework");
+                this.__httpApplication.Response.AddHeader("X-Engine", "EY.WebDAV");
 
-				//Microsoft Required header - Thanks to Michael Liebman for this tidbit!
-				this.__httpApplication.Response.AddHeader("MS-Author-Via", "DAV");
+                //Microsoft Required header - Thanks to Michael Liebman for this tidbit!
+                this.__httpApplication.Response.AddHeader("MS-Author-Via", "DAV");
 			}
 		}
 

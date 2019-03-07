@@ -6,6 +6,7 @@
 
 using System.IO;
 using Sphorium.WebDAV.Server.Framework.BaseClasses;
+using XDav.Helper;
 
 namespace Sphorium.WebDAV.Server.Framework.Resources
 {
@@ -23,6 +24,12 @@ namespace Sphorium.WebDAV.Server.Framework.Resources
 			: base(displayName, filePath)
 		{
 		}
+
+        public DavFile(FileInfo fileInfo):this(fileInfo.Name, fileInfo.FullName)
+        {
+            this.CreationDate = fileInfo.CreationTime;
+            this.LastModified = fileInfo.LastWriteTime.ToUniversalTime();
+        }
 
 		/// <summary>
 		/// Dav File Content Type
@@ -57,5 +64,7 @@ namespace Sphorium.WebDAV.Server.Framework.Resources
 				return this.ResourcePath;
 			}
 		}
-	}
+
+        public override string ETag => GeneralHelper.Md5HashStringForUtf8String(this.FilePath + this.LastModified);
+    }
 }

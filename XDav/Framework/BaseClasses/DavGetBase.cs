@@ -4,9 +4,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+using Sphorium.WebDAV.Server.Framework.Resources;
 using System;
 using System.IO;
 using System.Web;
+using XDav.Helper;
 
 namespace Sphorium.WebDAV.Server.Framework.BaseClasses
 {
@@ -123,6 +125,28 @@ namespace Sphorium.WebDAV.Server.Framework.BaseClasses
 
 		private int DavGetBase_InternalProcessDavRequest(object sender, EventArgs e)
 		{
+            var etag = string.Empty;
+            var fileInfo = FileWrapper.Current.File?.FileInfo;
+            if(fileInfo != null && fileInfo.Exists)
+            {
+                var davFile = new DavFile(fileInfo);
+                etag = $"\"{davFile.ETag}\"";
+                base.HttpApplication.Response.Headers["ETag"] = etag;
+
+                var ifNoneMatch = base.HttpApplication.Request.Headers["If-None-Match"];
+                if (ifNoneMatch != null)
+                {
+                    if (ifNoneMatch == etag)
+                    {
+                        return 304;
+                    }
+                }
+            }
+            else
+            {
+                return (int)ServerResponseCode.NotFound;
+            }
+
 			base.HttpApplication.Response.Cache.SetCacheability(ResponseCache);
 
 			if (ResponseCacheExpiration != DateTime.MinValue)

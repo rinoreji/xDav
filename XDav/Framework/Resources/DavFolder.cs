@@ -91,5 +91,7 @@ namespace Sphorium.WebDAV.Server.Framework.Resources
 				return this.ResourcePath;
 			}
 		}
-	}
+
+        public override string ETag => "";
+    }
 }

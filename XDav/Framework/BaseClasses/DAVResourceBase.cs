@@ -190,18 +190,18 @@ namespace Sphorium.WebDAV.Server.Framework.BaseClasses
 								{
 									case "lastmodified":
 										{
-											//DavPropertyAttribute _propertyAttribute = new DavPropertyAttribute();
-											//_propertyAttribute.AttributeName = "dt";
-											//_propertyAttribute.AttributeNamespace = "b";
-											//_propertyAttribute.AttributeValue = "dateTime.rfc1123";
+                                            //DavPropertyAttribute _propertyAttribute = new DavPropertyAttribute();
+                                            //_propertyAttribute.AttributeName = "dt";
+                                            //_propertyAttribute.AttributeNamespace = "b";
+                                            //_propertyAttribute.AttributeValue = "dateTime.rfc1123";
 
-											//_property.Attributes.Add(_propertyAttribute);
-											//_property.Value = _propertyValue.ToString("r", CultureInfo.InvariantCulture);
+                                            //_property.Attributes.Add(_propertyAttribute);
+                                            //_property.Value = _propertyValue.ToString("r", CultureInfo.InvariantCulture);
 
-											//_property.Value = _propertyValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.RFC1123Pattern, CultureInfo.InvariantCulture);
-
-											_property.Value = _propertyValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'");
-										}
+                                            //_property.Value = _propertyValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.RFC1123Pattern, CultureInfo.InvariantCulture);
+                                            
+                                            _property.Value = _propertyValue.ToString("ddd, dd MMM yyy HH':'mm':'ss 'GMT'");
+                                        }
 										break;
 
 									case "creationdate":
@@ -428,9 +428,10 @@ namespace Sphorium.WebDAV.Server.Framework.BaseClasses
 		///	Dav Resource created DateTime
 		/// </summary>
 		public DateTime CreationDate { get; set; }
-		#endregion
-
-	}
+        #endregion
+        
+        public abstract string ETag { get; }
+    }
 
 	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = true)]
 	internal sealed class ResourcePropertyAttribute : Attribute
@@ -470,5 +471,6 @@ namespace Sphorium.WebDAV.Server.Framework.BaseClasses
 		/// XML property name
 		/// </summary>
 		public string XmlPropName { get; private set; }
-	}
+
+    }
 }
